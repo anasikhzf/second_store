@@ -2,30 +2,26 @@
 session_start();
 include 'config/database.php';
 
-// Contoh data: jika session kosong, isi contoh
-if (!isset($_SESSION['cart'])) {
-  $_SESSION['cart'] = [
-    ['id'=>1, 'name'=>'Kamera Bekas', 'image'=>'images/sample1.jpg', 'price'=>500000, 'qty'=>1],
-    ['id'=>2, 'name'=>'Jam Tangan Vintage', 'image'=>'images/sample2.jpg', 'price'=>150000, 'qty'=>2],
-  ];
-}
+// Ambil data keranjang dari session
+$cart = $_SESSION['cart'] ?? [];
 
-// Hapus item
+// Hapus item jika ada parameter remove
 if (isset($_GET['remove'])) {
-  $id = intval($_GET['remove']);
-  foreach($_SESSION['cart'] as $key => $item){
-    if($item['id'] == $id){
-      unset($_SESSION['cart'][$key]);
-      break;
+    $id = intval($_GET['remove']);
+    foreach ($cart as $key => $item) {
+        if ($item['id'] == $id) {
+            unset($cart[$key]);
+            break;
+        }
     }
-  }
-  header("Location: cart.php");
-  exit;
+    $_SESSION['cart'] = $cart; // Simpan kembali session
+    header("Location: cart.php");
+    exit;
 }
 
-$cart = $_SESSION['cart'];
 $total = 0;
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <?php include 'components/head.php'; ?>

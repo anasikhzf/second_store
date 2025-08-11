@@ -39,7 +39,15 @@ $related_res = mysqli_query($conn, "SELECT id, name, image, price FROM product
       <p class="text-primary fw-bold fs-4">Rp <?= number_format($product['price'],0,',','.'); ?></p>
       <p>Kategori: <?= htmlspecialchars($product['category'] ?: 'Tidak ada'); ?></p>
       <p><?= nl2br(htmlspecialchars($product['description'] ?? '')); ?></p>
-      <button class="btn btn-success"><i class="bi bi-cart-plus"></i> Tambah ke Keranjang</button>
+      <form method="POST" action="add_to_cart.php" class="mt-3">
+        <input type="hidden" name="id" value="<?= $product['id']; ?>">
+        <button type="submit" class="btn btn-success">
+          <i class="bi bi-cart-plus"></i> Tambah ke Keranjang
+        </button>
+      </form>
+      <button class="btn btn-outline-primary mt-2" onclick="window.history.back()">
+        <i class="bi bi-arrow-left"></i> Kembali
+      </button>
     </div>
   </div>
 
@@ -53,7 +61,7 @@ $related_res = mysqli_query($conn, "SELECT id, name, image, price FROM product
           <div class="card-body text-center">
             <h6 class="card-title"><?= htmlspecialchars($p['name']); ?></h6>
             <p class="text-primary fw-bold">Rp <?= number_format($p['price'],0,',','.'); ?></p>
-            <a href="detail.php?id=<?= $p['id']; ?>" class="btn btn-outline-primary btn-sm">Lihat</a>
+            <a href="product_detail.php?id=<?= $p['id']; ?>" class="btn btn-outline-primary btn-sm">Lihat</a>
           </div>
         </div>
       </div>

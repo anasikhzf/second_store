@@ -2,6 +2,10 @@
 session_start();
 include 'config/database.php';
 
+// if (!isset($_SESSION['admin'])) {
+//     header("Location: admin/login.php?redirect=checkout.php");
+//     exit;
+// }
 // Ambil data keranjang
 $cart = $_SESSION['cart'] ?? [];
 $total = 0;
